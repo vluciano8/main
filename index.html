@@ -40,11 +40,46 @@ body {
   from, to { border-color: transparent }
   50% { border-color: #fff }
 }
+#emojify {
+  font-size: 32px;
+  font-family: Helvetica, Arial;
+}
+
+.emojified {
+    height: 1.25em;
+    width: 1.25em;
+    padding: 0 .05em 0 .1em;
+    vertical-align: -0.2em;
+}
   </style>
 </head>
+  
+/* Adding Emojis */
+// 1) Make a regular expression ("regex") to find emoji (just one here)
+var regex = /(?:\uD83D\uDE0D)/g;
+
+// 2) Find the text of the element with the id "emojify"
+var emojifyElement = document.getElementById("emojify");
+var elementString = emojifyElement.innerHTML;
+
+// 3) Use the Regex on the HTML element string
+var match = regex.exec(elementString);
+
+// 4) Make a new image element with the desired image
+var img = new Image();
+img.setAttribute('draggable', 'false');
+img.className = "emojified";
+img.alt = match[0];
+img.src = "https://abs.twimg.com/emoji/v2/72x72/1f60d.png";
+
+// 5) replace the emoji with the new img element, and update the DOM
+emojifyElement.innerHTML = elementString.replace(regex, img.outerHTML);
 <body>
+  
+  
 <div class="typewriter">
 <h1>Yeah it's me!!</h1>  
+<span id="emojify">Here&rsquo;s that emoji! &#x1f60d;</span>
 </div>
 </body>
 </html>
